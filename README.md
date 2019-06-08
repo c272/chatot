@@ -5,6 +5,7 @@
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ChatOnThis, a compact and easy to set up forum framework, written in Node.
+[Demo](http://chatot.glitch.me/)
 
 ## Setup
 Clone the repository, and open up `config.json`. There, you can configure the following values to fit the forum you want:
