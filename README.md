@@ -1,5 +1,9 @@
 ![Chatot Logo](small_logo.png)
 
+![](https://img.shields.io/badge/version-v1-orange.svg)
+![](https://img.shields.io/badge/dependencies-8-green.svg)
+![](https://img.shields.io/badge/license-MIT-blue.svg)
+
 ChatOnThis, a compact and easy to set up forum framework, written in Node.
 
 ## Setup
