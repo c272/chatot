@@ -44,3 +44,7 @@ Clone the repository, and open up `config.json`. There, you can configure the fo
 "RECAPTCHA_SITE_KEY": "",
 "RECAPTCHA_SECRET": ""
 ```
+
+After this, start up your server using `node server.js` and then log in with the default user "admin", with password "admin". You can then create new users and delete the default one once another admin has been created.
+
+Then you're done! All board/topic changes are done through the GUI admin panel.
