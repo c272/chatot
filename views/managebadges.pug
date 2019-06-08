@@ -1,0 +1,15 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2(style="margin-bottom:2px;") Edit badges for #{user.username}.
+  if error_message
+    p(style="color:red;") #{error_message}
+    
+  p
+    i Enter a list of badges, comma separated, that this user has.
+  form(method="POST" action="/api/managebadges?user="+user.username)
+    textarea(style="width:50%;height:50%" name="badgelist") #{user.badges.join()}
+    br
+    input(type="submit" value="Apply")
+  include footer.pug

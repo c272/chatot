@@ -1,0 +1,23 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Sign Up
+  if error_message
+    p(style="color:red;") #{error_message}
+  form(method="POST" action="/api/signup")
+    p(style="margin-bottom:0px;") Username (Alphanumeric, no spaces):
+    input(type="text" name="username")
+    p(style="margin-bottom:0px;") Password:
+    input(type="password" name="password")
+    p(style="margin-bottom:0px;") Repeat Password:
+    input(type="password" name="password_repeat")
+    p(style="margin-bottom:0px;") Email:
+    input(type="text" name="email")
+    br
+    br
+    include captcha.pug
+    br
+    input(type="submit" value="Go" style="margin-right:10px;")
+    a(href="/login") log in
+  include footer.pug

@@ -1,0 +1,10 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Post to "#{topic}".
+  if error_message
+    p(style="color:red;") #{error_message}
+  form(method="POST" action="/api/post?board="+board+"&topic="+topic)
+    include postform.pug
+  include footer.pug

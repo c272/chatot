@@ -1,0 +1,96 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Admin Panel
+  if error_message
+    p(style="color:red;") #{error_message}
+  hr
+  h3 User Management
+  each val in users
+    div(class="bordered_div")
+      b #{val.username}
+      form(class="form-inline" method="POST" action="/api/manageuser?user="+val.username)
+        label Verified?
+        input(type="checkbox" name="verified" checked=val.verified)
+        label Moderator
+        input(type="checkbox" name="moderator" checked=val.moderator)
+        label Admin
+        input(type="checkbox" name="admin" checked=val.admin)
+        input(type="submit" value="Apply")
+      a(href="/api/deleteuser?id="+val.username) delete
+  br
+  
+  h3 Badge Management
+  each val in badges
+    div(class="bordered_div")
+      img(src=val.image class="noAA" style="width:32px; height: 32px; margin-right: 10px;")
+      b #{val.name}
+      p #{val.description}
+      p
+        a(href="/admin/editbadge?name="+val.name) edit
+        |  | 
+        a(href="/api/deletebadge?name="+val.name) delete
+  br
+  form(method="POST" action="/api/createbadge")
+    label Name: 
+    input(type="text" name="badgename")
+    label(style="margin-left:5px;") Description: 
+    input(type="text" name="badgedesc")
+    label(style="margin-left:10px;") Image: 
+    input(type="text" name="badgeimage")
+    input(type="submit" value="Create")
+  br
+  
+  h3 Board Management
+  each board in boards
+    div(class="bordered_div")
+        b #{board.name}
+        br
+        br
+        i(style="margin-bottom:0px;") Topics:
+        each topic in board.topics
+          p
+            | #{topic.name}  
+            a(href="/api/deletetopic?board="+board.name+"&topic="+topic.name) delete
+        form(class="form-inline" method="POST" action="/api/createtopic?board="+board.name)
+          label Name
+          input(type="text" name="topicname")
+          label Description
+          input(type="text" name="topicdesc")
+          input(type="submit" value="Add Topic")
+        a(href="/api/deleteboard?board="+board.name) delete
+        br
+  br
+  form(class="form-inline" method="POST" action="/api/createboard")
+    label Name
+    input(type="text" name="board_name")
+    label Description
+    input(type="text" name="board_desc")
+    input(type="submit" value="Create")
+  br
+  
+  h3 News Management
+  div(class="bordered_div")
+    each post in news
+      p
+        b "#{post.title}" 
+        | by 
+        b #{post.author}
+      p
+        a(href="/admin/editnews?post="+post.id) edit
+        |  | 
+        a(href="/api/deletenews?post="+post.id) delete
+  br
+  form(method="POST" action="/api/createnews")
+    label Title
+    br
+    input(type="text" name="newstitle")
+    br
+    br
+    label Body (Markdown)
+    br
+    textarea(rows="10" cols="60" name="newsbody")
+    br
+    input(type="submit" value="Submit")
+  include footer.pug

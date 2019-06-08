@@ -1,0 +1,20 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Login
+  if error_message
+    p(style="color:red;") #{error_message}
+  form(method="POST" action="/api/login")
+    p(style="margin-bottom:0px;") Username:
+    input(type="text" name="username")
+    p(style="margin-bottom:0px;") Password:
+    input(type="password" name="password")
+    br
+    br
+    include captcha.pug
+    br
+    input(type="submit" value="Go" style="margin-right:10px;")
+    a(href="/register") sign up
+  include footer.pug
+    

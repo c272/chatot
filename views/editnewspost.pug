@@ -1,0 +1,19 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Edit News Post
+  form(method="POST" action="/api/editnews?post="+postid)
+    label Title
+    br
+    input(name="newstitle" type="text" style="width:70%;" value=posttitle)
+    br
+    br
+    label 
+      | Body 
+      a(href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet") (Markdown)
+    br
+    textarea(style="width: 70%; height: 60%;" name="newsbody") #{postbody}
+    br
+    input(type="submit" value="Submit")
+  include footer.pug

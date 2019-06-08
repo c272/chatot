@@ -1,0 +1,9 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  img(src=badge.image class="noAA" style="width:128px; height:128px;")
+  h2(style="margin-bottom:10px;") #{badge.name}
+  p(style="margin-top:0px;") #{badge.description}
+  a(href="/badges") back
+  include footer.pug

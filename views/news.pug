@@ -1,0 +1,12 @@
+if news_posts.length != 0
+  each val in news_posts
+    div(class="news-post")
+      h3(style="margin-bottom: 0px;") #{val.title}
+      i 
+        | written by 
+        a(href="users?id="+val.author) #{val.author}
+        | , #{val.date}.
+      div: != markdown(val.body)
+else
+  p There is currently no news.
+a(href="news/") more

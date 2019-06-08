@@ -1,0 +1,52 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Edit Profile
+  if error_message
+    p(style="color:red;") #{error_message}
+  form(method="POST" action="/api/editprofile")
+    label Status
+    br
+    input(type="text" name="status" value=user.description)
+    br
+    br
+    label About 
+    a(href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet") (Markdown)
+    br
+    textarea(name="description" style="width: 70%; height: 60%;") #{user.about}
+    br
+    br
+    label Profile Picture 
+    i (Image URL, 64x64 on most pages, 72x72 on profile).
+    br
+    input(type="text" name="profile_picture" value=user.profile_picture style="width:43em;")
+    br
+    br
+    label Discord (URL)
+    br
+    input(type="text" name="discord" value=user.contacts.discord)
+    br
+    br
+    label Email
+    br
+    input(type="text" name="email" value=user.contacts.email)
+    br
+    br
+    label Reddit (Username)
+    br
+    input(type="text" name="reddit" value=user.contacts.reddit)
+    br
+    br
+    label Twitter (Username)
+    br
+    input(type="text" name="twitter" value=user.contacts.twitter)
+    br
+    br
+    label YouTube (Channel Username)
+    br
+    input(type="text" name="youtube" value=user.contacts.youtube)
+    br
+    br
+    input(type="submit" value="Save")
+  include footer.pug

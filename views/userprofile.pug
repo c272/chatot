@@ -1,0 +1,129 @@
+head
+  include header.pug
+body(class="main") 
+  include titlebar.pug
+  
+  div(style="align-items: center; margin-top: 20px; margin-bottom: 10px; display:flex;")
+    if user.profile_picture != ""
+            br
+            img(src=user.profile_picture class="uprof-profile-picture")
+            br
+            div(style="width:15px;")
+    div
+      if userinfo.username == user.username || userinfo.isadmin
+        div(style="align-items: center; display: flex;")
+          h2(class="userprofile-left" style="text-align: center; margin-right:10px; margin-top: 2px; margin-bottom:2px;") #{user.username}
+          p(class="userprofile-right")
+            if userinfo.username == user.username
+              a(href="/users/edit") edit profile
+            if userinfo.username == user.username && userinfo.isadmin
+              |  | 
+            if userinfo.isadmin
+              a(href="/admin/managebadges?user="+user.username) manage badges
+        div(style="clear:both;")
+        
+      else
+        if badges.length!=0
+          h2(style="text-align: center; margin-bottom:1px; margin-top: -8px;") #{user.username}
+        else
+          h2(style="text-align: center;") #{user.username}
+      
+      if badges.length!=0
+        each badge in badges
+          a(href="/badges?name="+badge.name)
+            img(src=badge.image class="noAA" style="width:16px; height:16px; margin-right:3px;" title=badge.name)
+        
+      
+  i(style="margin-bottom:0px;")
+    span
+      - var postPercent = ((amtPosts / globalPostAmt)*100).toString().substring(0, 6);
+      | #{amtPosts} posts created, #{amtReplies} replies 
+      i (#{postPercent}% of all posts)
+    span , joined on #{user.creationDate}.
+    
+  if user.moderator && !user.admin
+    p(style="color:"+modColour+"; margin-top: 2px;") Moderator
+  if user.admin
+    p(style="color:"+adminColour+"; margin-top: 2px;") Admin
+  
+  h3 About
+  if user.about!=''
+    div!= markdown(user.about)
+  else
+    p #{defaultAbout}
+  
+  h3 Status
+  p #{user.description}
+  hr
+  
+  div(style="float:left; margin-right: 30px;")
+    h3(style="margin-bottom:1px;") Posts
+    if posts.length==20
+      i Only the 20 most recent posts are displayed.
+      br
+    br
+    if posts.length==0
+      p This user has no posts.
+    else
+      each post in posts
+        div(class="bordered_div" style="height:55px; max-width: 60em; min-width: 50em;")
+          div(class="postinfo-left")
+            p(style="margin-top:0px")
+              span
+                b 
+                  a(href="/post/view?id="+post.id) #{post.title}
+
+            i #{post.preview}
+        div(style="clear:both;height:10px;")
+  
+  div(style="float:left; margin-bottom: 10px;")
+    h3 Links
+    span
+      if user.contacts.discord!=''
+        a(href="http://discord.gg/"+user.contacts.discord) Discord
+      else
+        | Discord - 
+        i (None)
+      br
+      if user.contacts.email!=''
+        a(href="mailto://"+user.contacts.email) Email
+      else
+        | Email - 
+        i (None)
+      br
+      if user.contacts.reddit!=''
+        a(href="http://reddit.com/u/"+user.contacts.reddit) Reddit
+      else
+        | Reddit - 
+        i (None)
+      br
+      if user.contacts.twitter!=''
+        a(href="http://twitter.com/"+user.contacts.twitter) Twitter
+      else
+        | Twitter - 
+        i (None)
+      br
+      if user.contacts.youtube!=''
+        a(href="http://youtube.com/c/"+user.contacts.youtube) YouTube
+      else
+        | YouTube - 
+        i (None)
+  div(style="clear:both;")
+  
+  h3(style="margin-bottom:1px;") Active Posts
+  i This user has replied in these threads at least once.
+  br
+  if replies.length==0
+    p This user has no active posts.
+  else
+    ul
+      each post in replies
+        li
+          span
+            b
+              a(href="/post/view?id="+post.id) #{post.title} 
+            | by 
+            b
+              a(href="/users?id="+post.author) #{post.author}
+    
+  include footer.pug

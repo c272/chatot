@@ -1,0 +1,31 @@
+if title.startsWith('http')
+  a(href="/")
+    img(src=title style="margin-bottom:1px; margin-top: 0px;")
+else
+  a(href="/")
+    h1(style="margin-bottom:1px; color: black;")= title
+hr(style="margin-bottom:1px;")
+div
+  p(class="titlebar")
+    a(href="/") home
+    |  | 
+    a(href="/boards") boards
+    |  | 
+    a(href="/news") news
+    |  | 
+    a(href="/directory") users
+    |  | 
+    if userinfo && userinfo.isadmin
+      a(href="/admin") admin
+      |  | 
+    if userinfo && userinfo.loggedin
+      a(href="/logout") log out
+    else
+      a(href="/login") log in
+  p(class="titlebar-right")
+    if userinfo && userinfo.loggedin
+      b
+        a(href="/users?id="+userinfo.username) #{userinfo.username}
+    else
+      i You are not logged in.
+hr(style="clear: both; margin-top:1px;")

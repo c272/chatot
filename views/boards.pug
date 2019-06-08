@@ -1,0 +1,34 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Boards
+  if error_message
+    p(style="color:red;") #{error_message}
+    
+  if boards.length == 0
+    p There are currently no boards.
+  else
+    each board in boards
+      div(class="bordered_div" style="max-width: 800px;")
+        h2(style="margin-bottom:0px;") #{board.name}
+        b #{board.description}
+        br
+        br
+        each topic in board.topics
+          hr
+          b
+            - var amtPost = topic.posts.length + topic.stickied_posts.length;
+            p
+              a(href="/boards/view?board="+board.name+"&topic="+topic.name) #{topic.name} (#{amtPost} posts)
+              if userinfo.isadmin
+                |  | 
+                if topic.locked
+                  a(href="/api/unlocktopic?board="+board.name+"&topic="+topic.name) unlock topic
+                else
+                  a(href="/api/locktopic?board="+board.name+"&topic="+topic.name) lock topic
+
+          p= topic.description
+      br
+    
+  include footer.pug

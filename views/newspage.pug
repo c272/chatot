@@ -1,0 +1,28 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 News
+  
+  if news.length != 0
+    each post in news
+      div(class="bordered_div" style="padding-left: 10px;")
+        h3(style="margin-bottom:0px;") #{post.title}
+        p(style="margin-top:0px;")
+          i written by
+          b(style="margin-left:6px;")
+            a(href="/users?id="+post.author) #{post.author}
+          i , #{post.date}.
+        div!= markdown(post.body)
+      br
+      
+    p
+    if page > 1
+      a(href="/news?page="+(page-1)) previous 
+      | | 
+    a(href="/news?page="+(page+1)) next
+    
+  else
+    p There is currently no news to display.
+  
+  include footer.pug

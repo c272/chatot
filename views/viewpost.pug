@@ -1,0 +1,63 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  
+  h2(style="margin-bottom:2px;") #{post.name}
+  i
+    | by 
+    b
+      a(href="/users?id="+post.replies[0].author.username) #{post.replies[0].author.username}
+    if post.date
+      | , #{post.date}
+  br
+  br
+  
+  if post.locked
+    p(style="color:#f2a900;") This thread is locked.
+      
+  if error_message
+    p(style="color:red;") #{error_message}
+  
+  for reply in post.replies
+    div(class="post_div" style="display:flex;")
+    
+      div(class="userinfo")
+        if reply.author.profile_picture != ""
+          img(src=reply.author.profile_picture class="user-profile-picture")
+          br
+        a(href="/users?id="+reply.author.username)
+          b #{reply.author.username}
+        br
+        p(style="color:"+reply.author.statuscolour+"; margin-bottom:1px;") #{reply.author.status}
+        i #{reply.author.description}
+        
+      div(class="postbody")!= markdown(reply.body)
+        if userinfo && (reply.author.username == userinfo.username || userinfo.ismoderator || userinfo.isadmin)
+          p
+            a(href="/post/edit?post="+post.id+"&id="+reply.id) edit
+            |  - 
+            a(href="/api/deletepost?id="+post.id+"&reply="+reply.id) delete
+            if reply.id==0 && (userinfo.ismoderator || userinfo.isadmin)
+              |  - 
+              if post.locked
+                a(href='/api/unlockpost?id='+post.id) unlock
+              else
+                a(href='/api/lockpost?id='+post.id) lock
+      div(style="clear: both;")
+    br
+    
+  if userinfo && userinfo.loggedin && !post.locked
+    a(href="/post/reply?id="+post.id) add reply
+    br
+    
+  div(style="display:inline-block;")
+    p
+      if page>1
+        a(href="/post/view?id="+post.id+"&page="+(page-1)) previous 
+      else
+        i(style="color:#8e908c;") none 
+      | - #{page} - 
+      a(href="/post/view?id="+post.id+"&page="+(parseInt(page)+1)) next 
+
+  include footer.pug

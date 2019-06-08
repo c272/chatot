@@ -1,0 +1,12 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  if error_message
+    p(style="color:red;") #{error_message}
+  h2= welcomeHeader
+  p= welcomeBody
+  p -
+  h2 News
+  include news.pug
+  include footer.pug

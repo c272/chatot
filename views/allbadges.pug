@@ -1,0 +1,14 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Badges
+  each val in badges
+    div(class="bordered_div")
+      img(src=val.image class="noAA" style="width:32px; height: 32px; margin-right: 10px;")
+      b 
+        a(href="/badges?name="+val.name) #{val.name}
+      p #{val.description}
+    br
+  a(href='/directory') back to users
+  include footer.pug

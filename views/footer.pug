@@ -1,0 +1,17 @@
+br
+br
+if tokens
+  br
+  if tokens && tokens.length==0
+    i There are currently no users signed in.
+  else
+    i(style="margin-bottom:1px;") There are #{tokens.length} users currently signed in:
+  div(style="display:flex; flex-direction: row; margin-top: 0px;")
+    each user in tokens
+      p(style="margin-top: 0px;")
+        a(href="/users?id="+user.user) #{user.user}
+        | ,
+        div(style="width:5px;")
+  br
+hr
+i (c) #{title}, running on chatot by c272.

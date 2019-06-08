@@ -1,0 +1,14 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Reply to "#{postname}"
+  form(method="POST" action="/api/reply?id="+postid)
+    label 
+      | Body 
+      a(href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet") (Markdown)
+    br
+    textarea(style="width: 70%; height: 60%;" name="replybody")
+    br
+    input(type="submit" value="Submit")
+  include footer.pug

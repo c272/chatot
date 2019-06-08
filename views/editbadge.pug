@@ -1,0 +1,26 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2 Edit Badge
+  if error_message
+    p(style="color:red;") #{error_message}
+    
+  form(method="POST" action="/api/editbadge?name="+badge.name)
+    label Name
+    br
+    input(type="text" name="badgename" value=badge.name)
+    br
+    br
+    label Description
+    br
+    input(type="text" name="badgedesc" value=badge.description)
+    br
+    br
+    label Image
+    br
+    input(type="text" name="badgeimage" value=badge.image)
+    br
+    br
+    input(type="submit" value="Apply")
+  include footer.pug

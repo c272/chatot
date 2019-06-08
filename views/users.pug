@@ -1,0 +1,29 @@
+head
+  include header.pug
+  script(type="text/javascript").
+    function redirUser() {
+      window.location = "/users?id=" + document.getElementById('profileName').value;
+    }
+    
+body(class="main")
+  include titlebar.pug
+  h2(style="margin-bottom:2px;") Users
+  i All users sorted by join date.
+  br
+  br
+  b Go to profile: 
+  input(id="profileName")
+  button(onclick="redirUser()") Go
+  br
+  br
+  each user in users
+    div(class="bordered_div" style="align-items:center;display:flex;")
+      img(src=user.profile_picture style="width:64px;height:64px;margin-right:10px;")
+      b
+        a(href="/users?id="+user.username) #{user.username}
+    br
+  
+  b
+    a(href='/badges') See all badges.
+      
+  include footer.pug

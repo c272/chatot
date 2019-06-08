@@ -1,0 +1,74 @@
+head
+  include header.pug
+body(class="main")
+  include titlebar.pug
+  h2(style="margin-bottom:5px;") #{boardname} - "#{topicname}"
+  p(style="margin-top:0px;") #{topicdesc}
+  if locked
+    p(style="color:#f2a900;") This topic is locked.
+    
+  if userinfo && userinfo.loggedin && !locked
+    a(href="/post?board="+boardname+"&topic="+topicname)
+      button(style="width:130px;height:30px;") Create Thread
+    br
+    br
+    
+  if stickied_posts.length==0 && posts.length==0
+    div(class="bordered_div")
+      b(style="margin-top:10px;margin-left:5px;margin-right:5px;margin-bottom:10px;") No posts in this topic.
+
+  each post in stickied_posts
+    div(class="bordered_div" style="height:55px;")
+      div(class="postinfo-left")
+        p(style="margin-top:0px;")
+          span(style="color:green;") Stickied - 
+          span
+            b 
+              a(href="/post/view?id="+post.id) #{post.name}
+        i #{post.preview}
+        if userinfo && userinfo.ismoderator
+          p
+            a(href='/api/unsticky?board='+boardname+'&topic='+topicname+'&id='+post.id) unsticky
+            |  | 
+            if post.locked
+              a(href='/api/unlockpost?id='+post.id) unlock
+            else
+              a(href='/api/lockpost?id='+post.id) lock
+            |  | 
+            a(href='/api/deletepost?id='+post.id+'&reply=0') delete
+          
+      div(class="postinfo-right" style="margin-top:-10px; margin-right:10px;")
+        - var repl = post.replies.length-1;
+        p Replies: #{repl}
+        
+    div(style="clear:both; height:10px;")
+
+  each post in posts
+    div(class="bordered_div" style="height:55px;")
+      div(class="postinfo-left")
+        p(style="margin-top:0px")
+          span
+            b 
+              a(href="/post/view?id="+post.id) #{post.name}
+              
+        i #{post.preview}
+        
+        if userinfo && userinfo.ismoderator
+          div(style="height:5px;")
+          p
+            a(href='/api/sticky?board='+boardname+'&topic='+topicname+'&id='+post.id) sticky
+            |  | 
+            if post.locked
+              a(href='/api/unlockpost?id='+post.id) unlock
+            else
+              a(href='/api/lockpost?id='+post.id) lock
+            |  | 
+            a(href='/api/deletepost?id='+post.id+'&reply=0') delete
+            
+      div(class="postinfo-right" style="margin-top:-10px; margin-right:10px;")
+        - var repl = post.replies.length-1;
+        p Replies: #{repl}
+        
+    div(style="clear:both;height:10px;")
+      
+  include footer.pug
